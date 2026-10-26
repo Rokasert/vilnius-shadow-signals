@@ -1,0 +1,62 @@
+{
+  "source": "ar",
+  "dataset": "municipalities",
+  "snapshot_month": "2026-10",
+  "run_id": "20261023T100242Z",
+  "extractor_version": "1",
+  "started_at": "2026-10-23T10:02:42.680663Z",
+  "finished_at": "2026-10-23T10:02:46.041033Z",
+  "request": {
+    "url": "https://get.data.gov.lt/datasets/gov/rc/ar/savivaldybe/Savivaldybe/:format/csv",
+    "model": "rc/ar/savivaldybe/Savivaldybe",
+    "query": "",
+    "sample_of": {
+      "records_total": 60,
+      "files": [
+        {
+          "path": "part-0001.csv.gz",
+          "bytes": 12321,
+          "sha256": "0e919a15b98d85fe566372ba2f3b182931790ae560211fe75c9ff38148474d1f",
+          "records": 60,
+          "compression": "gzip"
+        }
+      ]
+    }
+  },
+  "http": {
+    "status": 200,
+    "attempts": 1
+  },
+  "format": {
+    "type": "csv",
+    "delimiter": ",",
+    "compression": "gzip"
+  },
+  "files": [
+    {
+      "path": "part-0001.csv.gz",
+      "bytes": 12260,
+      "sha256": "11d98b0c7229ee39a89d65b436e1e730514b7606b6315667edde062a725fe8ac",
+      "records": 60,
+      "compression": "gzip"
+    }
+  ],
+  "records_total": 60,
+  "columns": [
+    "_type",
+    "_id",
+    "_revision",
+    "_page.next",
+    "sav_kodas",
+    "tipas",
+    "tipo_santrumpa",
+    "pavadinimas",
+    "apskritis._id",
+    "sav_nuo"
+  ],
+  "schema_fingerprint": "f10f89d0fc687de4",
+  "source_as_of": null,
+  "warnings": [
+    "replay sample: only the rows the pipeline needs"
+  ]
+}

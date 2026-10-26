@@ -1,2 +1,6 @@
-# Auto detect text files and perform LF normalization
-* text=auto
+* text=auto eol=lf
+*.parquet binary
+*.duckdb binary
+*.zip binary
+*.gz binary
+*.png binary

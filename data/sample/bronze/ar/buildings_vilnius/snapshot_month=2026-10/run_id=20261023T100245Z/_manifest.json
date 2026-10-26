@@ -1,0 +1,65 @@
+{
+  "source": "ar",
+  "dataset": "buildings_vilnius",
+  "snapshot_month": "2026-10",
+  "run_id": "20261023T100245Z",
+  "extractor_version": "1",
+  "started_at": "2026-10-23T10:02:45.642698Z",
+  "finished_at": "2026-10-23T10:02:48.938663Z",
+  "request": {
+    "url": "https://get.data.gov.lt/datasets/gov/rc/ar/pastatas/Pastatas/:format/csv?savivaldybe._id=%228e92c395-419b-4b57-8f0c-568358a80fb0%22",
+    "model": "rc/ar/pastatas/Pastatas",
+    "query": "savivaldybe._id=\"8e92c395-419b-4b57-8f0c-568358a80fb0\"",
+    "sample_of": {
+      "records_total": 80693,
+      "files": [
+        {
+          "path": "part-0001.csv.gz",
+          "bytes": 23055448,
+          "sha256": "b2ae073b0c766e46fad8a57d9914a1685195a9ea819907c3af1ae2b1a07127cd",
+          "records": 80693,
+          "compression": "gzip"
+        }
+      ]
+    }
+  },
+  "http": {
+    "status": 200,
+    "attempts": 1
+  },
+  "format": {
+    "type": "csv",
+    "delimiter": ",",
+    "compression": "gzip"
+  },
+  "files": [
+    {
+      "path": "part-0001.csv.gz",
+      "bytes": 1081561,
+      "sha256": "945825646da49ec8cb74812e1249aa21bbf0a7243d85a72cd0fe57cd023394e3",
+      "records": 3795,
+      "compression": "gzip"
+    }
+  ],
+  "records_total": 3795,
+  "columns": [
+    "_type",
+    "_id",
+    "_revision",
+    "_base",
+    "_page.next",
+    "savivaldybe._id",
+    "aob_kodas._id",
+    "gyvenamoji_vietove._id",
+    "gatve._id",
+    "nr",
+    "korpuso_nr",
+    "pasto_kodas",
+    "aob_nuo"
+  ],
+  "schema_fingerprint": "4c52c27d478fc127",
+  "source_as_of": null,
+  "warnings": [
+    "replay sample: only the rows the pipeline needs"
+  ]
+}

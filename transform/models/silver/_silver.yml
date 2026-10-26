@@ -1,0 +1,179 @@
+version: 2
+
+models:
+  - name: activity_codes
+    columns:
+      - name: source_id
+        data_tests: [unique, not_null]
+
+  - name: companies
+    columns:
+      - name: company_code
+        data_tests: [unique, not_null, company_code_format]
+      - name: jar_record_id
+        data_tests: [unique, not_null]
+
+  - name: employer_months
+    data_tests:
+      - unique_combination:
+          arguments:
+            columns: [insurer_code, month]
+    columns:
+      - name: month
+        data_tests: [not_null]
+      - name: insured
+        data_tests: [not_null]
+      - name: company_code
+        data_tests:
+          - company_code_format
+          - relationships:
+              arguments:
+                to: ref('companies')
+                field: company_code
+              config:
+                severity: warn
+
+  - name: company_vat
+    columns:
+      - name: company_code
+        data_tests: [unique, not_null, company_code_format]
+
+  - name: company_divisions
+    data_tests:
+      - unique_combination:
+          arguments:
+            columns: [company_code, division_no]
+
+  - name: addresses
+    columns:
+      - name: address_id
+        data_tests: [unique, not_null]
+
+  - name: company_registered_addresses
+    columns:
+      - name: company_code
+        data_tests: [unique, not_null]
+
+  - name: company_financials
+    data_tests:
+      - unique_combination:
+          arguments:
+            columns: [company_code, period_start, period_end]
+
+  - name: company_taxes_paid
+    data_tests:
+      - unique_combination:
+          arguments:
+            columns: [company_code, year, month]
+          config:
+            where: "company_code is not null"
+            severity: warn
+    columns:
+      - name: source_id
+        data_tests: [unique, not_null]
+
+  - name: company_tax_arrears
+    columns:
+      - name: taxpayer_code
+        data_tests: [unique, not_null]
+      - name: company_code
+        data_tests: [unique, company_code_format]
+
+  - name: company_filing_gaps
+    data_tests:
+      - unique_combination:
+          arguments:
+            columns: [company_code, gap_type, missing_year]
+
+  - name: job_vacancies
+    columns:
+      - name: vacancy_id
+        data_tests: [unique, not_null]
+      - name: company_code
+        data_tests: [company_code_format]
+
+  - name: places
+    columns:
+      - name: place_id
+        data_tests: [unique, not_null]
+
+  - name: place_categories
+    data_tests:
+      - unique_combination:
+          arguments:
+            columns: [place_id, category]
+
+  - name: website_company_codes
+    data_tests:
+      - unique_combination:
+          arguments:
+            columns: [place_id, company_code, evidence_type]
+    columns:
+      - name: company_code
+        data_tests: [company_code_format]
+
+  - name: place_company_candidates
+    data_tests:
+      - unique_combination:
+          arguments:
+            columns: [place_id, company_code, method]
+    columns:
+      - name: method
+        data_tests:
+          - not_null
+          - accepted_values:
+              arguments:
+                values:
+                  - website_code
+                  - website_vat
+                  - name_exact
+                  - name_in_place
+                  - brand_exact
+                  - directory_link
+                  - registered_address
+                  - vacancy_address
+
+  - name: place_company_matches
+    columns:
+      - name: place_id
+        data_tests: [unique, not_null]
+      - name: score
+        data_tests:
+          - between:
+              arguments:
+                min_value: 0
+                max_value: 1
+      - name: confidence
+        data_tests:
+          - not_null
+          - accepted_values:
+              arguments:
+                values: [high, medium, low, unmatched]
+      - name: company_code
+        data_tests:
+          - relationships:
+              arguments:
+                to: ref('companies')
+                field: company_code
+
+seeds:
+  - name: minimum_wage
+    columns:
+      - name: year
+        data_tests: [unique, not_null]
+
+  - name: category_activity_classes
+    data_tests:
+      - unique_combination:
+          arguments:
+            columns: [category, activity_class]
+
+  - name: generic_name_words
+    columns:
+      - name: word
+        data_tests: [unique, not_null]
+
+  - name: platform_hosts
+    columns:
+      - name: host
+        data_tests: [unique, not_null]

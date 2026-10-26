@@ -1,0 +1,30 @@
+version: 2
+
+sources:
+  - name: bronze
+    schema: bronze
+    tables:
+      - name: sodra__employers_monthly
+      - name: jar__legal_entities
+      - name: jar__legal_forms
+      - name: jar__legal_statuses
+      - name: jar__registered_addresses
+      - name: jar__profit_loss_statements
+      - name: jar__missing_financial_statements
+      - name: jar__late_financial_statements
+      - name: ar__municipalities
+      - name: ar__streets
+      - name: ar__buildings_vilnius
+      - name: ar__premises
+      - name: vmi__taxpayers
+      - name: vmi__taxes_paid_vilnius
+      - name: vmi__tax_arrears
+      - name: vmi__control_actions_by_sector
+      - name: vmi__audit_assessments_by_sector
+      - name: vmi__vat_returns_by_sector
+      - name: lsd__legal_entity_activities
+      - name: lsd__evrk_2_1
+      - name: lsd__evrk_2
+      - name: uzt__job_vacancies_vilnius
+      - name: google__places
+      - name: web__company_codes

@@ -1,0 +1,70 @@
+{
+  "source": "jar",
+  "dataset": "profit_loss_statements",
+  "snapshot_month": "2026-10",
+  "run_id": "20261023T100237Z",
+  "extractor_version": "1",
+  "started_at": "2026-10-23T10:02:37.312430Z",
+  "finished_at": "2026-10-23T10:03:26.750797Z",
+  "request": {
+    "url": "https://get.data.gov.lt/datasets/gov/rc/jar/pelno_ataskaitos/PelnoAtaskaita/:format/csv?laikotarpis_nuo>=%222023-01-01%22",
+    "model": "rc/jar/pelno_ataskaitos/PelnoAtaskaita",
+    "query": "laikotarpis_nuo>=\"2023-01-01\"",
+    "sample_of": {
+      "records_total": 1623286,
+      "files": [
+        {
+          "path": "part-0001.csv.gz",
+          "bytes": 731853187,
+          "sha256": "1ae4d0d682a534cc1abaebdcb441f31d5487102dfc0db88ce4c51c96029bffc3",
+          "records": 1623286,
+          "compression": "gzip"
+        }
+      ]
+    }
+  },
+  "http": {
+    "status": 200,
+    "attempts": 1
+  },
+  "format": {
+    "type": "csv",
+    "delimiter": ",",
+    "compression": "gzip"
+  },
+  "files": [
+    {
+      "path": "part-0001.csv.gz",
+      "bytes": 21486594,
+      "sha256": "e65f599cc64e0b5813c0b613903dd7e57c7be675d76cc1df2adce331eac4db82",
+      "records": 47698,
+      "compression": "gzip"
+    }
+  ],
+  "records_total": 47698,
+  "columns": [
+    "_type",
+    "_id",
+    "_revision",
+    "_base",
+    "_page.next",
+    "juridinis_asmuo._id",
+    "forma._id",
+    "statusas._id",
+    "template_id",
+    "template_name",
+    "standard_id",
+    "standard_name",
+    "line_type_id",
+    "line_name",
+    "reiksme",
+    "laikotarpis_nuo",
+    "laikotarpis_iki",
+    "reg_date"
+  ],
+  "schema_fingerprint": "3226ea7462f0f06f",
+  "source_as_of": null,
+  "warnings": [
+    "replay sample: only the rows the pipeline needs"
+  ]
+}

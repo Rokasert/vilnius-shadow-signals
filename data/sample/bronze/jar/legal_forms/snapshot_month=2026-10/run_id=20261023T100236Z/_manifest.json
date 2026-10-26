@@ -1,0 +1,62 @@
+{
+  "source": "jar",
+  "dataset": "legal_forms",
+  "snapshot_month": "2026-10",
+  "run_id": "20261023T100236Z",
+  "extractor_version": "1",
+  "started_at": "2026-10-23T10:02:36.200353Z",
+  "finished_at": "2026-10-23T10:02:36.325377Z",
+  "request": {
+    "url": "https://get.data.gov.lt/datasets/gov/rc/jar/formos_statusai/Forma/:format/csv",
+    "model": "rc/jar/formos_statusai/Forma",
+    "query": "",
+    "sample_of": {
+      "records_total": 168,
+      "files": [
+        {
+          "path": "part-0001.csv.gz",
+          "bytes": 42390,
+          "sha256": "4fa1aa7e4d181f59477353cca93ef0dc0e9df595a7bc5a13686d85d32330ba58",
+          "records": 168,
+          "compression": "gzip"
+        }
+      ]
+    }
+  },
+  "http": {
+    "status": 200,
+    "attempts": 1
+  },
+  "format": {
+    "type": "csv",
+    "delimiter": ",",
+    "compression": "gzip"
+  },
+  "files": [
+    {
+      "path": "part-0001.csv.gz",
+      "bytes": 42221,
+      "sha256": "66507d0e149fad3dc33a20d86320dbda55aeec8699b561b8aa96c1b6b6b9d623",
+      "records": 168,
+      "compression": "gzip"
+    }
+  ],
+  "records_total": 168,
+  "columns": [
+    "_type",
+    "_id",
+    "_revision",
+    "_page.next",
+    "kodas",
+    "pavadinimas",
+    "pav_ilgas",
+    "name",
+    "tipas",
+    "type"
+  ],
+  "schema_fingerprint": "be97b8bc8f73c09e",
+  "source_as_of": null,
+  "warnings": [
+    "replay sample: only the rows the pipeline needs"
+  ]
+}

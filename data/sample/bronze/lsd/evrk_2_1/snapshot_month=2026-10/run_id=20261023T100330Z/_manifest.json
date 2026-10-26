@@ -1,0 +1,63 @@
+{
+  "source": "lsd",
+  "dataset": "evrk_2_1",
+  "snapshot_month": "2026-10",
+  "run_id": "20261023T100330Z",
+  "extractor_version": "1",
+  "started_at": "2026-10-23T10:03:30.644566Z",
+  "finished_at": "2026-10-23T10:03:32.195414Z",
+  "request": {
+    "url": "https://get.data.gov.lt/datasets/gov/lsd/cl/evrk2_1/EkonominesVeiklosRusis/:format/csv",
+    "model": "lsd/cl/evrk2_1/EkonominesVeiklosRusis",
+    "query": "",
+    "sample_of": {
+      "records_total": 1771,
+      "files": [
+        {
+          "path": "part-0001.csv.gz",
+          "bytes": 1939576,
+          "sha256": "32079554fb3c9482c3bee6d3453f2e57492f075769368fe50fce7a35b9e2e7e3",
+          "records": 1771,
+          "compression": "gzip"
+        }
+      ]
+    }
+  },
+  "http": {
+    "status": 200,
+    "attempts": 1
+  },
+  "format": {
+    "type": "csv",
+    "delimiter": ",",
+    "compression": "gzip"
+  },
+  "files": [
+    {
+      "path": "part-0001.csv.gz",
+      "bytes": 1937804,
+      "sha256": "93e828c1598fc65d2c99f9ae60acbb714a359ef7002c1e30ce341997c2409ca0",
+      "records": 1771,
+      "compression": "gzip"
+    }
+  ],
+  "records_total": 1771,
+  "columns": [
+    "_type",
+    "_id",
+    "_revision",
+    "_page.next",
+    "kodas",
+    "pavadinimas_lt",
+    "pavadinimas_en",
+    "pastabos_lt",
+    "pastabos_en",
+    "lygmens_pavadinimas",
+    "lygmuo"
+  ],
+  "schema_fingerprint": "ac1b77ff5a68dba7",
+  "source_as_of": null,
+  "warnings": [
+    "replay sample: only the rows the pipeline needs"
+  ]
+}

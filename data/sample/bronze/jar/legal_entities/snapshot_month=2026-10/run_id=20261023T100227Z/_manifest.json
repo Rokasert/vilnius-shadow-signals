@@ -1,0 +1,65 @@
+{
+  "source": "jar",
+  "dataset": "legal_entities",
+  "snapshot_month": "2026-10",
+  "run_id": "20261023T100227Z",
+  "extractor_version": "1",
+  "started_at": "2026-10-23T10:02:27.476380Z",
+  "finished_at": "2026-10-23T10:02:41.723969Z",
+  "request": {
+    "url": "https://get.data.gov.lt/datasets/gov/rc/jar/iregistruoti/JuridinisAsmuo/:format/csv",
+    "model": "rc/jar/iregistruoti/JuridinisAsmuo",
+    "query": "",
+    "sample_of": {
+      "records_total": 550482,
+      "files": [
+        {
+          "path": "part-0001.csv.gz",
+          "bytes": 146346250,
+          "sha256": "714b1e1ad46359f292e2ff49566f222f801ea48b2fd5960886c09bdf436d7955",
+          "records": 550482,
+          "compression": "gzip"
+        }
+      ]
+    }
+  },
+  "http": {
+    "status": 200,
+    "attempts": 1
+  },
+  "format": {
+    "type": "csv",
+    "delimiter": ",",
+    "compression": "gzip"
+  },
+  "files": [
+    {
+      "path": "part-0001.csv.gz",
+      "bytes": 3286166,
+      "sha256": "6fe891bcd90a28da4f4cd2835348644b03a5e42a71e68d7db1081f4277bc3608",
+      "records": 12762,
+      "compression": "gzip"
+    }
+  ],
+  "records_total": 12762,
+  "columns": [
+    "_type",
+    "_id",
+    "_revision",
+    "_page.next",
+    "ja_kodas",
+    "ja_pavadinimas",
+    "pilnas_adresas",
+    "adresas._id",
+    "reg_data",
+    "isreg_data",
+    "forma._id",
+    "statusas._id",
+    "stat_data"
+  ],
+  "schema_fingerprint": "bc92f36d6f30f069",
+  "source_as_of": null,
+  "warnings": [
+    "replay sample: only the rows the pipeline needs"
+  ]
+}

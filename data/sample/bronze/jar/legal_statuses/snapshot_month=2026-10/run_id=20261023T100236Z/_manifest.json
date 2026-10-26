@@ -1,0 +1,59 @@
+{
+  "source": "jar",
+  "dataset": "legal_statuses",
+  "snapshot_month": "2026-10",
+  "run_id": "20261023T100236Z",
+  "extractor_version": "1",
+  "started_at": "2026-10-23T10:02:36.327378Z",
+  "finished_at": "2026-10-23T10:02:37.311448Z",
+  "request": {
+    "url": "https://get.data.gov.lt/datasets/gov/rc/jar/formos_statusai/Statusas/:format/csv",
+    "model": "rc/jar/formos_statusai/Statusas",
+    "query": "",
+    "sample_of": {
+      "records_total": 31,
+      "files": [
+        {
+          "path": "part-0001.csv.gz",
+          "bytes": 6459,
+          "sha256": "52475c5c19a6b4ee5ede2583e83d1f626e45383e2ef7fe2c1d291aa30f767c08",
+          "records": 31,
+          "compression": "gzip"
+        }
+      ]
+    }
+  },
+  "http": {
+    "status": 200,
+    "attempts": 1
+  },
+  "format": {
+    "type": "csv",
+    "delimiter": ",",
+    "compression": "gzip"
+  },
+  "files": [
+    {
+      "path": "part-0001.csv.gz",
+      "bytes": 6427,
+      "sha256": "0a49a7b65a2449573aecbcbc4ae91c7e999b72802299148e0e6231913f13482c",
+      "records": 31,
+      "compression": "gzip"
+    }
+  ],
+  "records_total": 31,
+  "columns": [
+    "_type",
+    "_id",
+    "_revision",
+    "_page.next",
+    "kodas",
+    "pavadinimas",
+    "name"
+  ],
+  "schema_fingerprint": "8b3714e5ed5cf6e0",
+  "source_as_of": null,
+  "warnings": [
+    "replay sample: only the rows the pipeline needs"
+  ]
+}

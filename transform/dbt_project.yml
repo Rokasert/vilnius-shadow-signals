@@ -1,0 +1,33 @@
+name: shadow_signals
+version: "0.1.0"
+config-version: 2
+profile: shadow_signals
+
+model-paths: ["models"]
+seed-paths: ["seeds"]
+test-paths: ["tests"]
+macro-paths: ["macros"]
+target-path: target
+log-path: logs
+clean-targets: [target, dbt_packages]
+
+models:
+  shadow_signals:
+    silver:
+      +schema: silver
+      +materialized: table
+    gold:
+      +schema: gold
+      +materialized: table
+
+seeds:
+  shadow_signals:
+    +schema: reference
+    category_activity_classes:
+      +column_types: {category: varchar, activity_class: varchar, is_core: boolean}
+    category_searches:
+      +column_types: {category: varchar, google_type: varchar, text_query: varchar}
+    generic_name_words:
+      +column_types: {word: varchar, kind: varchar}
+    platform_hosts:
+      +column_types: {host: varchar, kind: varchar}

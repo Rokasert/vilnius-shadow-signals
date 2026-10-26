@@ -1,0 +1,60 @@
+{
+  "source": "ar",
+  "dataset": "premises",
+  "snapshot_month": "2026-10",
+  "run_id": "20261023T100246Z",
+  "extractor_version": "1",
+  "started_at": "2026-10-23T10:02:46.043024Z",
+  "finished_at": "2026-10-23T10:03:14.166316Z",
+  "request": {
+    "url": "https://get.data.gov.lt/datasets/gov/rc/ar/patalpa/Patalpa/:format/csv",
+    "model": "rc/ar/patalpa/Patalpa",
+    "query": "",
+    "sample_of": {
+      "records_total": 1151462,
+      "files": [
+        {
+          "path": "part-0001.csv.gz",
+          "bytes": 228915822,
+          "sha256": "ffc1714dbc6f94f8b3ffa1e286d117fa6f026dfbbe4185a87cbca50c0c285b45",
+          "records": 1151462,
+          "compression": "gzip"
+        }
+      ]
+    }
+  },
+  "http": {
+    "status": 200,
+    "attempts": 1
+  },
+  "format": {
+    "type": "csv",
+    "delimiter": ",",
+    "compression": "gzip"
+  },
+  "files": [
+    {
+      "path": "part-0001.csv.gz",
+      "bytes": 874963,
+      "sha256": "e87800829273935697434278f8a77bb3f147d0f848c0398c13def4bda77af315",
+      "records": 4420,
+      "compression": "gzip"
+    }
+  ],
+  "records_total": 4420,
+  "columns": [
+    "_type",
+    "_id",
+    "_revision",
+    "_page.next",
+    "aob_kodas._id",
+    "pastatas._id",
+    "patalpos_nr",
+    "pat_nuo"
+  ],
+  "schema_fingerprint": "d7855635d653e697",
+  "source_as_of": null,
+  "warnings": [
+    "replay sample: only the rows the pipeline needs"
+  ]
+}

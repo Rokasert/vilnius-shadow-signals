@@ -1,0 +1,66 @@
+{
+  "source": "vmi",
+  "dataset": "tax_arrears",
+  "snapshot_month": "2026-10",
+  "run_id": "20261023T100326Z",
+  "extractor_version": "1",
+  "started_at": "2026-10-23T10:03:26.752797Z",
+  "finished_at": "2026-10-23T10:03:27.531913Z",
+  "request": {
+    "url": "https://get.data.gov.lt/datasets/gov/vmi/ja_nepriemokos/NepriemokosSuma/:format/csv",
+    "model": "vmi/ja_nepriemokos/NepriemokosSuma",
+    "query": "",
+    "sample_of": {
+      "records_total": 32265,
+      "files": [
+        {
+          "path": "part-0001.csv.gz",
+          "bytes": 6855737,
+          "sha256": "9b608d33ae3c7250a522b5cfae294dedec627d84f3788884db64cfff12c00490",
+          "records": 32265,
+          "compression": "gzip"
+        }
+      ]
+    }
+  },
+  "http": {
+    "status": 200,
+    "attempts": 1
+  },
+  "format": {
+    "type": "csv",
+    "delimiter": ",",
+    "compression": "gzip"
+  },
+  "files": [
+    {
+      "path": "part-0001.csv.gz",
+      "bytes": 488690,
+      "sha256": "cdfddcde681c61d1fca5fa972b6cb5495d7ca4ff6dea1c3f1da483ab2a14e323",
+      "records": 2318,
+      "compression": "gzip"
+    }
+  ],
+  "records_total": 2318,
+  "columns": [
+    "_type",
+    "_id",
+    "_revision",
+    "_page.next",
+    "id",
+    "sukurta",
+    "atnaujinta",
+    "ja_kodas",
+    "ja_pavadinimas",
+    "sav_kodas.sav_kodas",
+    "nepriemoka",
+    "pradelsta_nepriemoka",
+    "atideta_nepriemoka",
+    "atideta_pradelsta"
+  ],
+  "schema_fingerprint": "9804f3cc7002ad72",
+  "source_as_of": null,
+  "warnings": [
+    "replay sample: only the rows the pipeline needs"
+  ]
+}

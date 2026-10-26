@@ -1,0 +1,69 @@
+{
+  "source": "vmi",
+  "dataset": "taxes_paid_vilnius",
+  "snapshot_month": "2026-10",
+  "run_id": "20261023T100314Z",
+  "extractor_version": "1",
+  "started_at": "2026-10-23T10:03:14.168317Z",
+  "finished_at": "2026-10-23T10:03:55.695243Z",
+  "request": {
+    "url": "https://get.data.gov.lt/datasets/gov/vmi/ja_mokesciai/Moketojas/:format/csv?savivaldybe._id=%228e92c395-419b-4b57-8f0c-568358a80fb0%22&metai>=2024",
+    "model": "vmi/ja_mokesciai/Moketojas",
+    "query": "savivaldybe._id=\"8e92c395-419b-4b57-8f0c-568358a80fb0\"&metai>=2024",
+    "sample_of": {
+      "records_total": 142040,
+      "files": [
+        {
+          "path": "part-0001.csv.gz",
+          "bytes": 44806216,
+          "sha256": "ff8e75f4b7a3402008fcfc7a2f20235c6586c4e808387058e9e0a0fc4b39d7eb",
+          "records": 142040,
+          "compression": "gzip"
+        }
+      ]
+    }
+  },
+  "http": {
+    "status": 200,
+    "attempts": 1
+  },
+  "format": {
+    "type": "csv",
+    "delimiter": ",",
+    "compression": "gzip"
+  },
+  "files": [
+    {
+      "path": "part-0001.csv.gz",
+      "bytes": 6226402,
+      "sha256": "7aeaf5665f720811dc6c5d6577bf088492f73f68adc70f29c6ff1c2238ffca72",
+      "records": 19692,
+      "compression": "gzip"
+    }
+  ],
+  "records_total": 19692,
+  "columns": [
+    "_type",
+    "_id",
+    "_revision",
+    "_base",
+    "_page.next",
+    "id",
+    "mm_kodas._id",
+    "pavadinimas",
+    "tipas",
+    "apskritis._id",
+    "savivaldybe._id",
+    "praeitu_metu_suma",
+    "einamu_metu_suma",
+    "metai",
+    "menuo",
+    "suma",
+    "atnaujinta"
+  ],
+  "schema_fingerprint": "5cb254fbc8ce85a7",
+  "source_as_of": null,
+  "warnings": [
+    "replay sample: only the rows the pipeline needs"
+  ]
+}

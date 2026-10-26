@@ -1,0 +1,69 @@
+{
+  "source": "google",
+  "dataset": "places",
+  "snapshot_month": "2026-10",
+  "run_id": "20261023T185336Z",
+  "extractor_version": "1",
+  "started_at": "2026-10-23T18:53:36.816956Z",
+  "finished_at": "2026-10-23T18:55:08.615784Z",
+  "request": {
+    "url": "https://places.googleapis.com/v1/places:searchText",
+    "field_mask": "places.id,places.displayName,places.formattedAddress,places.shortFormattedAddress,places.location,places.types,places.primaryType,places.businessStatus,places.googleMapsUri,places.websiteUri,places.nationalPhoneNumber,places.rating,places.userRatingCount,places.regularOpeningHours,places.priceLevel,nextPageToken",
+    "searches": [
+      "restaurants/restaurant",
+      "cafes/cafe",
+      "cafes/coffee_shop",
+      "bars/bar",
+      "bars/pub",
+      "car_repair/car_repair",
+      "hairdressers/hair_salon",
+      "hairdressers/barber_shop",
+      "beauty_salons/beauty_salon",
+      "beauty_salons/nail_salon",
+      "driving_schools/vairavimo mokykla"
+    ],
+    "area": [
+      54.567,
+      25.024,
+      54.833,
+      25.482
+    ],
+    "grid": 3,
+    "max_depth": 6,
+    "calls": 423,
+    "unique_places": 3524,
+    "sample_of": {
+      "records_total": 423,
+      "files": [
+        {
+          "path": "responses.jsonl.gz",
+          "bytes": 9361251,
+          "sha256": "7b75bf2573be52a6bd932bbb754e2ea87c0dbc183e64e7132149235286ae8a96",
+          "records": 423,
+          "compression": "gzip"
+        }
+      ]
+    }
+  },
+  "http": {},
+  "format": {
+    "type": "jsonl",
+    "compression": "gzip"
+  },
+  "files": [
+    {
+      "path": "responses.jsonl.gz",
+      "bytes": 9361251,
+      "sha256": "7b75bf2573be52a6bd932bbb754e2ea87c0dbc183e64e7132149235286ae8a96",
+      "records": 423,
+      "compression": "gzip"
+    }
+  ],
+  "records_total": 423,
+  "columns": [],
+  "schema_fingerprint": null,
+  "source_as_of": null,
+  "warnings": [
+    "replay sample: only the rows the pipeline needs"
+  ]
+}

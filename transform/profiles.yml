@@ -1,0 +1,7 @@
+shadow_signals:
+  target: local
+  outputs:
+    local:
+      type: duckdb
+      path: "{{ env_var('WAREHOUSE_PATH', '../data/warehouse.duckdb') }}"
+      threads: 4

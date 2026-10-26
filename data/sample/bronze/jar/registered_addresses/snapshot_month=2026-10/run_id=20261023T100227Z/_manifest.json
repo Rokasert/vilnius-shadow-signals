@@ -1,0 +1,59 @@
+{
+  "source": "jar",
+  "dataset": "registered_addresses",
+  "snapshot_month": "2026-10",
+  "run_id": "20261023T100227Z",
+  "extractor_version": "1",
+  "started_at": "2026-10-23T10:02:27.477384Z",
+  "finished_at": "2026-10-23T10:02:36.198354Z",
+  "request": {
+    "url": "https://get.data.gov.lt/datasets/gov/rc/jar/buveines/Buveine/:format/csv",
+    "model": "rc/jar/buveines/Buveine",
+    "query": "",
+    "sample_of": {
+      "records_total": 229645,
+      "files": [
+        {
+          "path": "part-0001.csv.gz",
+          "bytes": 45050154,
+          "sha256": "4728d40c54542e4475eed84154a056b5d48f5f0474ba9f3d8943671dff6d7825",
+          "records": 229645,
+          "compression": "gzip"
+        }
+      ]
+    }
+  },
+  "http": {
+    "status": 200,
+    "attempts": 1
+  },
+  "format": {
+    "type": "csv",
+    "delimiter": ",",
+    "compression": "gzip"
+  },
+  "files": [
+    {
+      "path": "part-0001.csv.gz",
+      "bytes": 2340121,
+      "sha256": "7f5399674dfde921e6214a4f31789338c91ce0b4679b189a4a8e6163d1aeb038",
+      "records": 11906,
+      "compression": "gzip"
+    }
+  ],
+  "records_total": 11906,
+  "columns": [
+    "_type",
+    "_id",
+    "_revision",
+    "_page.next",
+    "juridinis_asmuo._id",
+    "adresas._id",
+    "adresas_nuo"
+  ],
+  "schema_fingerprint": "21a6304c9f191d40",
+  "source_as_of": null,
+  "warnings": [
+    "replay sample: only the rows the pipeline needs"
+  ]
+}

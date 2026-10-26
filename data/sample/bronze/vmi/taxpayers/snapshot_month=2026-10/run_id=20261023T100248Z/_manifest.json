@@ -1,0 +1,93 @@
+{
+  "source": "vmi",
+  "dataset": "taxpayers",
+  "snapshot_month": "2026-10",
+  "run_id": "20261023T100248Z",
+  "extractor_version": "1",
+  "started_at": "2026-10-23T10:02:48.941663Z",
+  "finished_at": "2026-10-23T10:03:30.137240Z",
+  "request": {
+    "url": "https://get.data.gov.lt/datasets/gov/vmi/mm_registras/MokesciuMoketojas/:format/csv",
+    "model": "vmi/mm_registras/MokesciuMoketojas",
+    "query": "",
+    "sample_of": {
+      "records_total": 930619,
+      "files": [
+        {
+          "path": "part-0001.csv.gz",
+          "bytes": 350581683,
+          "sha256": "cdac11c46ac28b1351d8e4d8a2679e4c1f8cdbfe26cb3ed88d974a316439661d",
+          "records": 930619,
+          "compression": "gzip"
+        }
+      ]
+    }
+  },
+  "http": {
+    "status": 200,
+    "attempts": 1
+  },
+  "format": {
+    "type": "csv",
+    "delimiter": ",",
+    "compression": "gzip"
+  },
+  "files": [
+    {
+      "path": "part-0001.csv.gz",
+      "bytes": 15298953,
+      "sha256": "22f731d25824782995ba495a382429e3fbf6bd3987ce7b548bb932af67033b68",
+      "records": 40925,
+      "compression": "gzip"
+    }
+  ],
+  "records_total": 40925,
+  "columns": [
+    "_type",
+    "_id",
+    "_revision",
+    "_page.next",
+    "id",
+    "klnt_tipas",
+    "ja_kodas",
+    "pavadinimas",
+    "ireg_data",
+    "isreg_data",
+    "anul_data",
+    "valstybe",
+    "tipo_kodas",
+    "tipo_aprasymas",
+    "tipas_nuo",
+    "tipas_iki",
+    "anul_tipas",
+    "pvm_kodas_pref",
+    "pvm_kodas",
+    "pvm_iregistruota",
+    "pvm_isregistruota",
+    "padalinio_nr",
+    "padalinio_pvd",
+    "padalinio_savivaldybe",
+    "padalinio_kodas",
+    "suformuota",
+    "isformuota",
+    "ekonomine_veikla._id",
+    "veiklos_pradzia",
+    "veiklos_pabaiga",
+    "veikla_anuliuota",
+    "pagrindine",
+    "vv_savivaldybe",
+    "vv_adresas_nuo",
+    "vv_adresas_iki",
+    "vv_adresas_anul",
+    "mm_grupe",
+    "grup_aprasymas",
+    "grupe_nuo",
+    "grupe_iki",
+    "grupe_anul"
+  ],
+  "schema_fingerprint": "7416684105aa79d6",
+  "source_as_of": null,
+  "warnings": [
+    "replay sample: only the rows the pipeline needs"
+  ]
+}

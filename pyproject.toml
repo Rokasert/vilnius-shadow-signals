@@ -1,0 +1,44 @@
+[project]
+name = "shadow-signals"
+version = "0.1.0"
+requires-python = ">=3.12,<3.13"
+dependencies = [
+    "dbt-core>=1.12.6",
+    "dbt-duckdb>=1.11.0",
+    "duckdb>=2.0.0",
+    "fsspec>=2026.9.0",
+    "httpx>=0.28.1",
+    "pydantic-settings>=2.16.1",
+    "streamlit>=1.66.1",
+    "tenacity>=9.2.1",
+    "typer>=0.27.3",
+]
+
+[project.scripts]
+shadow-signals = "shadow_signals.cli:app"
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/shadow_signals"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py312"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "B", "UP", "SIM"]
+
+[tool.ruff.lint.isort]
+known-first-party = ["shadow_signals"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+
+[dependency-groups]
+dev = [
+    "pytest>=9.1.1",
+    "ruff>=0.17.2",
+]

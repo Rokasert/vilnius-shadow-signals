@@ -1,0 +1,66 @@
+{
+  "source": "vmi",
+  "dataset": "audit_assessments_by_sector",
+  "snapshot_month": "2026-10",
+  "run_id": "20261023T100328Z",
+  "extractor_version": "1",
+  "started_at": "2026-10-23T10:03:28.035810Z",
+  "finished_at": "2026-10-23T10:03:28.897324Z",
+  "request": {
+    "url": "https://get.data.gov.lt/datasets/gov/vmi/sprendimai/Sprendimas/:format/csv",
+    "model": "vmi/sprendimai/Sprendimas",
+    "query": "",
+    "sample_of": {
+      "records_total": 398,
+      "files": [
+        {
+          "path": "part-0001.csv.gz",
+          "bytes": 77417,
+          "sha256": "de5c4d472301d5a7e8488ed50062b7dd40c32ef029f8bb8f754478f8439599d8",
+          "records": 398,
+          "compression": "gzip"
+        }
+      ]
+    }
+  },
+  "http": {
+    "status": 200,
+    "attempts": 1
+  },
+  "format": {
+    "type": "csv",
+    "delimiter": ",",
+    "compression": "gzip"
+  },
+  "files": [
+    {
+      "path": "part-0001.csv.gz",
+      "bytes": 77018,
+      "sha256": "18681542d5e2f16ace714021cf40df0dba8d1d12c1aaac6b13d15a1199330e5f",
+      "records": 398,
+      "compression": "gzip"
+    }
+  ],
+  "records_total": 398,
+  "columns": [
+    "_type",
+    "_id",
+    "_revision",
+    "_page.next",
+    "vda_prime_key",
+    "evrk._id",
+    "metai",
+    "mm_skaicius",
+    "suma_akc",
+    "suma_pln",
+    "suma_pvm",
+    "suma_gpm",
+    "suma_kiti",
+    "suma_viso"
+  ],
+  "schema_fingerprint": "b04d0d999c3caea0",
+  "source_as_of": null,
+  "warnings": [
+    "replay sample: only the rows the pipeline needs"
+  ]
+}

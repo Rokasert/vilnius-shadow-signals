@@ -1,0 +1,61 @@
+{
+  "source": "jar",
+  "dataset": "missing_financial_statements",
+  "snapshot_month": "2026-10",
+  "run_id": "20261023T100239Z",
+  "extractor_version": "1",
+  "started_at": "2026-10-23T10:02:39.158404Z",
+  "finished_at": "2026-10-23T10:02:42.841081Z",
+  "request": {
+    "url": "https://get.data.gov.lt/datasets/gov/rc/jar/fa_dokumentu_nepateike/Nepateikes/:format/csv",
+    "model": "rc/jar/fa_dokumentu_nepateike/Nepateikes",
+    "query": "",
+    "sample_of": {
+      "records_total": 113081,
+      "files": [
+        {
+          "path": "part-0001.csv.gz",
+          "bytes": 29061975,
+          "sha256": "8e337021275e69413b0f5a2bb1b10a7e5e173a485803058bf643bccc6945d700",
+          "records": 113081,
+          "compression": "gzip"
+        }
+      ]
+    }
+  },
+  "http": {
+    "status": 200,
+    "attempts": 1
+  },
+  "format": {
+    "type": "csv",
+    "delimiter": ",",
+    "compression": "gzip"
+  },
+  "files": [
+    {
+      "path": "part-0001.csv.gz",
+      "bytes": 1673061,
+      "sha256": "f829660205b03c1c180810233df4311c8ad5d6e9b750673198d2250d907367e1",
+      "records": 6535,
+      "compression": "gzip"
+    }
+  ],
+  "records_total": 6535,
+  "columns": [
+    "_type",
+    "_id",
+    "_revision",
+    "_page.next",
+    "juridinis_asmuo._id",
+    "ja_reg_data",
+    "forma._id",
+    "statusas._id",
+    "nepateikta_iki"
+  ],
+  "schema_fingerprint": "aefd622a333cc1b2",
+  "source_as_of": null,
+  "warnings": [
+    "replay sample: only the rows the pipeline needs"
+  ]
+}

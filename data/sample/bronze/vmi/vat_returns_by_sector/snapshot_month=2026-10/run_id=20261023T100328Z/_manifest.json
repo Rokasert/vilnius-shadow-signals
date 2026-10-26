@@ -1,0 +1,87 @@
+{
+  "source": "vmi",
+  "dataset": "vat_returns_by_sector",
+  "snapshot_month": "2026-10",
+  "run_id": "20261023T100328Z",
+  "extractor_version": "1",
+  "started_at": "2026-10-23T10:03:28.899167Z",
+  "finished_at": "2026-10-23T10:03:30.643537Z",
+  "request": {
+    "url": "https://get.data.gov.lt/datasets/gov/vmi/pvm_deklaracijos/VtsFr0600Mainai/:format/csv?mokestinis_laikotarpis>=%222024-01-01%22",
+    "model": "vmi/pvm_deklaracijos/VtsFr0600Mainai",
+    "query": "mokestinis_laikotarpis>=\"2024-01-01\"",
+    "sample_of": {
+      "records_total": 12144,
+      "files": [
+        {
+          "path": "part-0001.csv.gz",
+          "bytes": 4757455,
+          "sha256": "76b6c1e66303381447790f509607ba0340af3ec3a0874fcf91a11636fc1ae730",
+          "records": 12144,
+          "compression": "gzip"
+        }
+      ]
+    }
+  },
+  "http": {
+    "status": 200,
+    "attempts": 1
+  },
+  "format": {
+    "type": "csv",
+    "delimiter": ",",
+    "compression": "gzip"
+  },
+  "files": [
+    {
+      "path": "part-0001.csv.gz",
+      "bytes": 4745310,
+      "sha256": "0b5d413816744e7d892e2c5b24b233e253070de68dab4e3b625c1191c85a0ae6",
+      "records": 12144,
+      "compression": "gzip"
+    }
+  ],
+  "records_total": 12144,
+  "columns": [
+    "_type",
+    "_id",
+    "_revision",
+    "_base",
+    "_page.next",
+    "mokestinis_laikotarpis",
+    "sekcija_pagal_ekonomines_veiklos_rusiu_klasifikatoriu",
+    "skyrius_pagal_ekonomines_veiklos_rusiu_klasifikatoriu",
+    "apskritis",
+    "mokesciu_moketoju_skaicius",
+    "pvm_apmokestinami_sandoriai",
+    "pvm_apmokestinami_sandoriai_kai_pvm_isskaito_pirkejas",
+    "pvm_neapmokestinami_sandoriai",
+    "suvartojimas_privatiems_poreikiams",
+    "ilgalaikio_materialiojo_turto_pasigaminimas",
+    "sandoriu_kuriems_taikoma_spec_apmokestinimo_schema_marza",
+    "prekiu_eksportas_0_proc",
+    "es_pvm_moketojams_patiektos_prekes_0_proc",
+    "kiti_pvm_apmokestinami_sandoriai_0_proc",
+    "uz_lietuvos_ribu_ivyke_sandoriai_ne_pvm_objektas_lietuvoje",
+    "is_es_isigytos_prekes",
+    "is_es_isigytos_prekes_trikampei_prekybai",
+    "is_uzsienio_valstybiu_isigytos_paslaugos",
+    "is_ju_isigytos_is_es_pvm_moketoju",
+    "isigytu_prekiu_ir_paslaugu_pirkmo_pvm",
+    "sumoketas_importo_pvm",
+    "importo_pvm_kurio_iskaityma_kontroliuoja_vmi",
+    "standartinio_tarifo_pardavimo_pvm",
+    "procentu_9_pardavimo_pvm",
+    "procentu_5_pardavimo_pvm",
+    "pardavimo_pvm_pagal_95_str",
+    "pardavimo_pvm_pagal_96_str",
+    "is_es_isigytu_prekiu_pardavimo_pvm",
+    "atskaitomas_pvm",
+    "moketinas_i_biudzeta_arba_grazintinas_is_biudzeto_pvm"
+  ],
+  "schema_fingerprint": "6bdfa10ecb2836a9",
+  "source_as_of": null,
+  "warnings": [
+    "replay sample: only the rows the pipeline needs"
+  ]
+}

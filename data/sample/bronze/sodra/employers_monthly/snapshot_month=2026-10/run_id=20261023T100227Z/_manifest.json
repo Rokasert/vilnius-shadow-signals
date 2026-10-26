@@ -1,0 +1,84 @@
+{
+  "source": "sodra",
+  "dataset": "employers_monthly",
+  "snapshot_month": "2026-10",
+  "run_id": "20261023T100227Z",
+  "extractor_version": "1",
+  "started_at": "2026-10-23T10:02:27.474383Z",
+  "finished_at": "2026-10-23T10:02:39.157406Z",
+  "request": {
+    "urls": [
+      {
+        "url": "https://atvira.sodra.lt/imones/downloads/2025/monthly-2025.csv.zip",
+        "zip_sha256": "5c5534c75a3061d77834408b8c367b4ebbb46121dd5da48c2ae9e035a43e9bf0",
+        "zip_bytes": 14570423,
+        "last_modified": "Tue, 27 Jan 2026 11:22:59 GMT",
+        "member": "monthly-2025.csv",
+        "attempts": 1
+      },
+      {
+        "url": "https://atvira.sodra.lt/imones/downloads/2026/monthly-2026.csv.zip",
+        "zip_sha256": "1f1426a905853b62b8a002a0f9a637d166cd2fb45d5b38b1acc56ed3ed306c33",
+        "zip_bytes": 11175808,
+        "last_modified": "Tue, 29 Sep 2026 11:23:05 GMT",
+        "member": "monthly-2026.csv",
+        "attempts": 1
+      }
+    ],
+    "sample_of": {
+      "records_total": 2104010,
+      "files": [
+        {
+          "path": "monthly-2025.csv.gz",
+          "bytes": 179614685,
+          "sha256": "c15b293edd1a633a2b6731be9c1eb17eea1b8f1c1be6f3b0bf3df69efb1c8712",
+          "records": 1263816,
+          "compression": "gzip"
+        },
+        {
+          "path": "monthly-2026.csv.gz",
+          "bytes": 126854208,
+          "sha256": "da9ab6d8661bec7488c7f0bf8948215f8da213e14e9e54e25b39386acd0f4a54",
+          "records": 840194,
+          "compression": "gzip"
+        }
+      ]
+    }
+  },
+  "http": {},
+  "format": {
+    "type": "csv",
+    "delimiter": ";",
+    "compression": "gzip"
+  },
+  "files": [
+    {
+      "path": "part-0001.csv.gz",
+      "bytes": 17640441,
+      "sha256": "b63f5dc2f0d9a118422f20413f185d0f1fffce451921253df19b4fc9e5257912",
+      "records": 125084,
+      "compression": "gzip"
+    }
+  ],
+  "records_total": 125084,
+  "columns": [
+    "Draudėjo kodas (code)",
+    "Juridinių asmenų registro kodas (jarCode)",
+    "Pavadinimas (name)",
+    "Savivaldybė, kurioje registruota(municipality)",
+    "Ekonominės veiklos rūšies kodas(ecoActCode)",
+    "Ekonominės veiklos rūšies pavadinimas(ecoActName)",
+    "Mėnuo (month)",
+    "Vidutinis darbo užmokestis (avgWage)",
+    "Apdraustųjų skaičius (numInsured)",
+    "Vidutinis darbo užmokestis II (avgWage2)",
+    "Apdraustųjų skaičius II (numInsured2)",
+    "Valstybinio socialinio draudimo įmoka (tax)"
+  ],
+  "schema_fingerprint": "3209ce926d3f9496",
+  "source_as_of": "2026-08",
+  "warnings": [
+    "monthly-2026.csv.gz: columns differ from the first file in this run",
+    "replay sample: only the rows the pipeline needs"
+  ]
+}

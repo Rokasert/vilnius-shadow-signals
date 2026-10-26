@@ -1,0 +1,31 @@
+version: 2
+
+models:
+  - name: sector_profile
+    columns:
+      - name: activity_class
+        data_tests: [unique, not_null]
+      - name: companies
+        data_tests: [not_null]
+
+  - name: company_category_signals
+    data_tests:
+      - unique_combination:
+          arguments:
+            columns: [company_code, category]
+
+  - name: google_category_overview
+    columns:
+      - name: category
+        data_tests: [unique, not_null]
+
+  - name: category_decision
+    columns:
+      - name: category
+        data_tests: [unique, not_null]
+
+  - name: match_quality
+    data_tests:
+      - unique_combination:
+          arguments:
+            columns: [category, method]
