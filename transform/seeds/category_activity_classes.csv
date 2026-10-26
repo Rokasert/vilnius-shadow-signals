@@ -5,11 +5,7 @@ restaurants,5510,false
 restaurants,5621,false
 restaurants,5622,false
 restaurants,1071,false
-cafes,5611,true
-cafes,5630,true
-cafes,1071,false
-cafes,4724,false
-cafes,5510,false
+restaurants,4724,false
 bars,5630,true
 bars,5611,false
 bars,5510,false
@@ -17,14 +13,3 @@ car_repair,9531,true
 car_repair,9532,false
 car_repair,4782,false
 car_repair,4672,false
-hairdressers,9621,true
-hairdressers,9622,false
-hairdressers,9623,false
-hairdressers,4775,false
-beauty_salons,9622,true
-beauty_salons,9623,true
-beauty_salons,9621,false
-beauty_salons,4775,false
-driving_schools,8553,true
-driving_schools,8532,false
-driving_schools,8559,false

@@ -54,13 +54,13 @@
   "files": [
     {
       "path": "part-0001.csv.gz",
-      "bytes": 17640441,
-      "sha256": "b63f5dc2f0d9a118422f20413f185d0f1fffce451921253df19b4fc9e5257912",
-      "records": 125084,
+      "bytes": 10860536,
+      "sha256": "dc40ecb93cb488bf3bb39baf19c2e34fb56485738c5935dfe07f0bbad3370cb4",
+      "records": 75888,
       "compression": "gzip"
     }
   ],
-  "records_total": 125084,
+  "records_total": 75888,
   "columns": [
     "Draudėjo kodas (code)",
     "Juridinių asmenų registro kodas (jarCode)",

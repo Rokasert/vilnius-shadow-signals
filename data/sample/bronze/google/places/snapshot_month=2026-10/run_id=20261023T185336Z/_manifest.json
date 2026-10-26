@@ -53,13 +53,13 @@
   "files": [
     {
       "path": "responses.jsonl.gz",
-      "bytes": 9361251,
-      "sha256": "7b75bf2573be52a6bd932bbb754e2ea87c0dbc183e64e7132149235286ae8a96",
-      "records": 423,
+      "bytes": 4971591,
+      "sha256": "485eac5e7816ebd5777707cd88fab0b2d5ee6835a8ca9de539c3e86e08a45bb1",
+      "records": 207,
       "compression": "gzip"
     }
   ],
-  "records_total": 423,
+  "records_total": 207,
   "columns": [],
   "schema_fingerprint": null,
   "source_as_of": null,

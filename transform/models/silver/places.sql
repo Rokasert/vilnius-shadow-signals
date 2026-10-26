@@ -2,12 +2,16 @@
 
 -- One row per Google place in the newest Places pull, flattened from the raw API responses.
 -- Fields are read from JSON so a field Google omits everywhere doesn't break the model.
+-- Each search's category comes from the category_searches seed, so the seed decides the scope:
+-- places found only by searches no longer listed there are left out.
 with hits as (
     select
-        category,
-        _run_id as source_run_id,
-        unnest(from_json(json_extract(to_json(response), '$.places'), '["JSON"]')) as place
-    from {{ source('bronze', 'google__places') }}
+        s.category,
+        b._run_id as source_run_id,
+        unnest(from_json(json_extract(to_json(b.response), '$.places'), '["JSON"]')) as place
+    from {{ source('bronze', 'google__places') }} as b
+    inner join {{ ref('category_searches') }} as s
+        on coalesce(b.google_type, b.text_query) = coalesce(s.google_type, s.text_query)
 ),
 
 flat as (

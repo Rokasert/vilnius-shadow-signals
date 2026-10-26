@@ -1,12 +1,6 @@
 category,google_type,text_query
 restaurants,restaurant,restoranas
-cafes,cafe,kavinė
-cafes,coffee_shop,kavinė
+restaurants,cafe,kavinė
+restaurants,coffee_shop,kavinė
 bars,bar,baras
-bars,pub,baras
 car_repair,car_repair,autoservisas
-hairdressers,hair_salon,kirpykla
-hairdressers,barber_shop,barberis
-beauty_salons,beauty_salon,grožio salonas
-beauty_salons,nail_salon,manikiūras
-driving_schools,,vairavimo mokykla

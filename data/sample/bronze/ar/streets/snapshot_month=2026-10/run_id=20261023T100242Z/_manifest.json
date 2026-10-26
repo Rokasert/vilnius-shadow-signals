@@ -35,13 +35,13 @@
   "files": [
     {
       "path": "part-0001.csv.gz",
-      "bytes": 183000,
-      "sha256": "245f9e3f971aa6bc31ec9731a8ef9e32d4f05965606836828f5dc935f0291587",
-      "records": 929,
+      "bytes": 139406,
+      "sha256": "e7fd9d2daf78001d156a234bb3e80b09221f0b3f20a81affb2e2b22f96860d56",
+      "records": 709,
       "compression": "gzip"
     }
   ],
-  "records_total": 929,
+  "records_total": 709,
   "columns": [
     "_type",
     "_id",

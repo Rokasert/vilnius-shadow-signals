@@ -35,13 +35,13 @@
   "files": [
     {
       "path": "part-0001.csv.gz",
-      "bytes": 5089969,
-      "sha256": "18cfb29401263dc0f0ea5b8b1a1167d1e8ce2883e32f079327db7bbd26720e93",
-      "records": 13590,
+      "bytes": 4438938,
+      "sha256": "014fc9635983ef81a412bd2507bcf9441c7949fbde8eff6f910ff5d79ee2fe10",
+      "records": 11898,
       "compression": "gzip"
     }
   ],
-  "records_total": 13590,
+  "records_total": 11898,
   "columns": [
     "darbo_vietos_id",
     "statusas",

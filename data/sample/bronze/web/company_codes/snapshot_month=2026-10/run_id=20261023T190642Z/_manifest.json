@@ -50,13 +50,13 @@
   "files": [
     {
       "path": "pages.jsonl.gz",
-      "bytes": 1216385,
-      "sha256": "3c09843a7086c7e72e9c6cd8989d571538f1c39f1e84eee9695c8fd7b83874a5",
-      "records": 3082,
+      "bytes": 772974,
+      "sha256": "299d98ebbe9e22acf9f6960d2c77ef586e400df6265b4ca006b0f675fa6e90ad",
+      "records": 1926,
       "compression": "gzip"
     }
   ],
-  "records_total": 3082,
+  "records_total": 1926,
   "columns": [],
   "schema_fingerprint": null,
   "source_as_of": null,
