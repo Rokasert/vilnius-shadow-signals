@@ -10,11 +10,19 @@ import typer
 from shadow_signals import __version__
 from shadow_signals import ingest as ingestion
 from shadow_signals.context import RunContext
+from shadow_signals.export import export_outputs
 from shadow_signals.ingest import places
 from shadow_signals.lake import Lake, Manifest, new_run_id, utc_now
 from shadow_signals.sample import build_sample
 from shadow_signals.settings import get_settings
-from shadow_signals.warehouse import bronze_tables, load_bronze, run_dbt, warehouse_path
+from shadow_signals.warehouse import (
+    bronze_tables,
+    clear_models,
+    load_bronze,
+    prepare_history,
+    run_dbt,
+    warehouse_path,
+)
 
 log = logging.getLogger("shadow_signals")
 
@@ -166,8 +174,14 @@ def _transform(ctx: RunContext) -> None:
     if "google__places" not in tables:
         log.warning("no Google data in the warehouse; building without the Google models")
         args += ["--exclude", "tag:google"]
+    clear_models(ctx.settings)
+    prepare_history(ctx.settings)
     log.info("dbt %s", " ".join(args))
     run_dbt(ctx.settings, ctx.lake, *args)
+
+
+def _export(ctx: RunContext) -> str | None:
+    return export_outputs(ctx.settings, ctx.lake)
 
 
 @app.command()
@@ -199,6 +213,12 @@ def transform(month: MonthOption = None, mode: ModeOption = None) -> None:
 
 
 @app.command()
+def export() -> None:
+    """Save the month's lead list to the lake (history) and write CSV files to OUTPUT_DIR."""
+    _export(build_context(None, None))
+
+
+@app.command()
 def run(
     month: MonthOption = None,
     mode: ModeOption = None,
@@ -208,7 +228,7 @@ def run(
     yes: YesOption = False,
     max_calls: MaxCallsOption = None,
 ) -> None:
-    """Ingest, load into the warehouse, then transform."""
+    """Ingest, load into the warehouse, transform, then export the month's lead list."""
     ctx = build_context(month, mode, google)
     run_id = new_run_id()
     record = {
@@ -230,6 +250,7 @@ def run(
         }
         _load(ctx)
         _transform(ctx)
+        record["exported_month"] = _export(ctx)
         failed = [k for k, r in results.items() if isinstance(r, Exception)]
         record["status"] = "partial" if failed else "succeeded"
     finally:

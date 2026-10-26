@@ -31,3 +31,6 @@ seeds:
       +column_types: {word: varchar, kind: varchar}
     platform_hosts:
       +column_types: {host: varchar, kind: varchar}
+    match_corrections:
+      +column_types:
+        {place_id: varchar, company_code: varchar, verdict: varchar, checked_on: date, source: varchar}

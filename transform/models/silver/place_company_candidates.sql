@@ -62,6 +62,20 @@ company_classes as (
         and month >= (select month - interval 12 month from latest_month)
 ),
 
+-- links an analyst has checked by hand: confirmed ones become candidates, rejected ones are
+-- removed below, and both survive every monthly re-run
+corrections as (
+    select place_id, company_code, verdict, source from {{ ref('match_corrections') }}
+),
+
+analyst_confirmed as (
+    select k.place_id, k.company_code, 'analyst_confirmed' as method, k.source as evidence
+    from corrections as k
+    inner join places as p on k.place_id = p.place_id
+    inner join companies as c on k.company_code = c.company_code
+    where k.verdict = 'confirmed'
+),
+
 website as (
     select place_id, company_code, evidence_type as method, context as evidence
     from {{ ref('website_company_codes') }}
@@ -171,6 +185,8 @@ vacancy_address as (
 ),
 
 candidates as (
+    select * from analyst_confirmed
+    union all by name
     select * from website
     union all by name
     select * from name_exact
@@ -216,10 +232,15 @@ described as (
 )
 
 select *
-from described
+from described as d
 -- an address alone says little in a busy building: keep it only with a name or activity fit
-where not (
-    method in ('registered_address', 'vacancy_address')
-    and coalesce(name_similarity, 0) < 0.6
-    and not is_category_consistent
-)
+where
+    not (
+        method in ('registered_address', 'vacancy_address')
+        and coalesce(name_similarity, 0) < 0.6
+        and not is_category_consistent
+    )
+    and not exists (
+        select 1 from corrections as k
+        where k.verdict = 'rejected' and k.place_id = d.place_id and k.company_code = d.company_code
+    )

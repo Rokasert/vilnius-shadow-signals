@@ -14,6 +14,7 @@ class Settings(BaseSettings):
     lake_uri: str = "data/lake"
     sample_uri: str = "data/sample"
     warehouse_path: str = "data/warehouse.duckdb"
+    output_dir: str = "output"
     dbt_project_dir: str = "transform"
     run_mode: RunMode = "replay"
 

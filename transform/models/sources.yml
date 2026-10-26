@@ -28,3 +28,9 @@ sources:
       - name: uzt__job_vacancies_vilnius
       - name: google__places
       - name: web__company_codes
+
+  # earlier months' lead lists, loaded from the lake (gold/leads/snapshot_month=*/)
+  - name: history
+    schema: history
+    tables:
+      - name: leads

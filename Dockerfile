@@ -20,5 +20,6 @@ RUN uv sync --locked --no-dev
 
 COPY transform ./transform
 COPY app ./app
+COPY .streamlit ./.streamlit
 
 CMD ["shadow-signals", "run"]

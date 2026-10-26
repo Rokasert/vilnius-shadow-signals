@@ -122,7 +122,7 @@ def _keep_sets(con: duckdb.DuckDBPyConnection) -> None:
 
         create temp table keep_places as select place_id as id from wh.silver.places;
 
-        -- Vilnius as gold.sector_profile defines it: seat or Sodra employer record here
+        -- companies with their seat or a Sodra employer record in Vilnius
         create temp table vilnius_companies as
         select company_code from wh.silver.company_registered_addresses where is_vilnius_address
         union

@@ -1,0 +1,4 @@
+﻿snapshot_month,category,registry_companies,places,places_linked,places_linked_share,companies_linked,companies_assessed,companies_not_assessed,companies_busy,priority_leads,review_leads,leads,lead_share_of_assessed,lead_share_of_busy
+2026-10,bars,130,321,65,0.202,46,31,15,16,0,3,3,0.097,0.188
+2026-10,car_repair,807,591,358,0.606,322,266,56,133,1,2,3,0.011,0.023
+2026-10,restaurants,983,881,229,0.26,145,111,34,56,0,4,4,0.036,0.071

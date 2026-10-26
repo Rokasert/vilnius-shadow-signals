@@ -1,31 +1,57 @@
 version: 2
 
 models:
-  - name: sector_profile
-    columns:
-      - name: activity_class
-        data_tests: [unique, not_null]
-      - name: companies
-        data_tests: [not_null]
-
-  - name: company_category_signals
+  - name: company_assessment
     data_tests:
       - unique_combination:
           arguments:
             columns: [company_code, category]
-
-  - name: google_category_overview
     columns:
-      - name: category
-        data_tests: [unique, not_null]
+      - name: snapshot_month
+        data_tests: [not_null]
+      - name: tier
+        data_tests:
+          - accepted_values:
+              arguments:
+                values: [priority, review, none, not assessed]
+      - name: score
+        data_tests:
+          - between:
+              arguments:
+                min_value: 0
+                max_value: 7
 
-  - name: category_decision
-    columns:
-      - name: category
-        data_tests: [unique, not_null]
-
-  - name: match_quality
+  - name: leads
     data_tests:
       - unique_combination:
           arguments:
-            columns: [category, method]
+            columns: [company_code, category]
+    columns:
+      - name: rank
+        data_tests: [unique, not_null]
+      - name: tier
+        data_tests:
+          - accepted_values:
+              arguments:
+                values: [priority, review]
+      - name: company_code
+        data_tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('companies')
+                field: company_code
+
+  - name: category_summary
+    data_tests:
+      - unique_combination:
+          arguments:
+            columns: [snapshot_month, category]
+
+  - name: lead_changes
+    columns:
+      - name: change
+        data_tests:
+          - accepted_values:
+              arguments:
+                values: [new, dropped, same tier, moved up, moved down]

@@ -11,6 +11,20 @@ from shadow_signals.settings import Settings
 
 log = logging.getLogger(__name__)
 
+# what each month's lead list keeps in the lake, for comparing months
+HISTORY_LEADS_COLUMNS = {
+    "snapshot_month": "varchar",
+    "category": "varchar",
+    "company_code": "varchar",
+    "company_name": "varchar",
+    "tier": "varchar",
+    "score": "integer",
+}
+
+
+def history_leads_path(lake: Lake, month: str) -> str:
+    return lake.path("gold", "leads", f"snapshot_month={month}", "leads.parquet")
+
 
 def warehouse_path(settings: Settings) -> Path:
     path = Path(settings.warehouse_path).resolve()
@@ -44,15 +58,53 @@ def bronze_tables(settings: Settings) -> set[str]:
 
 def load_bronze(settings: Settings, lake: Lake) -> list[str]:
     """Copy the newest complete run of every bronze dataset into DuckDB (schema `bronze`),
-    plus run metadata (schema `meta`). The lake stays the source of truth; this is a cache
-    that can be rebuilt at any time."""
+    plus run metadata (schema `meta`) and earlier months' lead lists (schema `history`). The
+    lake stays the source of truth; this is a cache that can be rebuilt at any time."""
     latest = lake.latest_manifests()
     with duckdb.connect(str(warehouse_path(settings))) as con:
         con.execute("create schema if not exists bronze")
         con.execute("create schema if not exists meta")
         tables = [_load_dataset(con, lake, m) for m in latest if m.files]
         _load_run_metadata(con, lake, latest)
+        _load_history(con, lake)
     return tables
+
+
+def prepare_history(settings: Settings) -> None:
+    """Make sure history.leads exists (empty before the first export)."""
+    with duckdb.connect(str(warehouse_path(settings))) as con:
+        _create_history(con)
+
+
+def clear_models(settings: Settings) -> None:
+    """Drop what dbt builds (it rebuilds everything from bronze), so tables of models that no
+    longer exist don't linger."""
+    with duckdb.connect(str(warehouse_path(settings))) as con:
+        for schema in ("silver", "gold", "reference"):
+            con.execute(f"drop schema if exists {schema} cascade")
+
+
+def _create_history(con: duckdb.DuckDBPyConnection) -> None:
+    columns = ", ".join(f"{name} {kind}" for name, kind in HISTORY_LEADS_COLUMNS.items())
+    con.execute("create schema if not exists history")
+    con.execute(f"create table if not exists history.leads ({columns})")
+
+
+def _load_history(con: duckdb.DuckDBPyConnection, lake: Lake) -> None:
+    files = lake.fs.glob(lake.path("gold", "leads", "snapshot_month=*", "leads.parquet"))
+    if not files:
+        _create_history(con)
+        return
+    uris = ", ".join(_sql_str(lake.uri(p)) for p in files)
+    columns = ", ".join(
+        f"cast({name} as {kind}) as {name}" for name, kind in HISTORY_LEADS_COLUMNS.items()
+    )
+    con.execute("create schema if not exists history")
+    con.execute(
+        f"create or replace table history.leads as select {columns} "
+        f"from read_parquet([{uris}], hive_partitioning = false)"
+    )
+    log.info("history: %d month(s) of lead lists loaded", len(files))
 
 
 def _load_dataset(con: duckdb.DuckDBPyConnection, lake: Lake, manifest: Manifest) -> str:

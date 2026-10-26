@@ -1,0 +1,11 @@
+[client]
+# hide Streamlit's developer menu (Deploy, Rerun, Record screen): analysts only need the app
+toolbarMode = "minimal"
+
+[server]
+# don't watch the code files: no "Rerun" prompts for analysts
+fileWatcherType = "none"
+runOnSave = false
+
+[browser]
+gatherUsageStats = false

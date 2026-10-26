@@ -2,8 +2,9 @@
 
 -- The most likely company behind each Vilnius place. Each place-company pair is scored by its
 -- strongest evidence, using how often that kind of evidence named the right company among
--- 453 places whose own website states the company code (see the handbook). A confident match
--- also needs a clear lead over the runner-up company.
+-- 453 places whose own website states the company code (see the handbook). Links an analyst
+-- has checked (seed match_corrections) come first. A confident match also needs a clear lead
+-- over the runner-up company.
 with pairs as (
     select
         place_id,
@@ -27,6 +28,7 @@ scored as (
     select
         p.*,
         case
+            when list_contains(p.methods, 'analyst_confirmed') then 0.99
             when list_has_any(p.methods, ['website_code', 'website_vat']) then
                 case
                     when coalesce(w.companies, 0) > 2 then 0.6
@@ -62,6 +64,7 @@ scored as (
             else 0.01
         end as score,
         case
+            when list_contains(p.methods, 'analyst_confirmed') then 'checked by an analyst'
             when list_has_any(p.methods, ['website_code', 'website_vat']) then
                 case when coalesce(w.companies, 0) > 2 then 'website (several companies)' else 'website' end
             when list_has_any(p.methods, ['name_exact', 'directory_link']) then 'same name'
