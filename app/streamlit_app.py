@@ -89,31 +89,35 @@ order by month""",
 COLUMNS = {
     "Rank": "Order to look at companies in: priority leads, then review leads, then the rest by "
     "points. The next row is the next company to look at.",
-    "Lead": "Priority: the clearest cases. Review: worth a look. Not a lead. Not scored: owner-run "
-    "or non-profit form, whose owners or volunteers need not be insured staff.",
+    "Lead": "Priority: the clearest cases. Review: worth a look. Not a lead. Not scored: "
+    "non-profits, whose volunteers need not be insured staff.",
     "Why this tier": "The rule that decided the tier, in words.",
     "Points": "Sum of the points columns (Pts: …). A lead needs a busy company with 2+ points.",
     "Company": "Company name from the company register.",
     "Company code": "Company code (įmonės kodas).",
     "Category": "Google category the places were found in.",
     "Google reviews": "All-time Google reviews of the company's places in this category.",
-    "Busy": "Yes if the company has at least the category's median number of reviews.",
+    "Busiest place reviews": "Reviews of its busiest place in this category.",
+    "Busy": "Yes if its busiest place has at least the median reviews of all Google places in "
+    "the category (bars 121, car repair 34, restaurants & cafés 230 in October 2026).",
     "Open h/week": "Weekly opening hours of all the company's places on Google "
     "(places listed as open 24/7 are left out).",
     "Insured staff": "People insured by Sodra: the higher of the latest month and the "
     "12-month average. A part-timer counts as one.",
-    "Hours staff can cover": "Insured staff × 40 hours.",
-    "Coverage": "Hours staff can cover ÷ opening hours. Below 1, the declared staff cannot keep "
-    "the places open even with one person on duty.",
+    "Hours staff can cover": "Insured staff × 48 h (the legal weekly maximum with overtime). "
+    "For owner-run companies (MB, IĮ), 60 h are added for working owners.",
+    "Coverage": "Hours staff can cover ÷ opening hours. Below 0.8, at least a fifth of the "
+    "opening hours have nobody declared to work, even with one person on duty.",
     "Wage % of minimum": "Average declared wage ÷ minimum wage. Sodra publishes the wage only "
     "for 4+ insured staff.",
     "Revenue 2024 €": "Revenue from the 2024 annual accounts, the latest year most companies "
     "have filed.",
     "VAT-registered": "No = not VAT-registered at any time since 2024, i.e. it declares "
     "turnover under €45,000 a year.",
-    "Pts: staff can't cover hours": "2 points if coverage is below 1, 3 if below 0.5.",
+    "Pts: staff can't cover hours": "2 points if coverage is below 0.8, 3 if below 0.5.",
     "Pts: busier than its size": "1 point if reviews per insured worker are in the top 10% of "
-    "the category, or revenue per review in the bottom 10%.",
+    "the category's UAB/AB companies, or revenue per review in the bottom 10%. Not used for "
+    "owner-run companies, whose working owners aren't counted anywhere.",
     "Pts: low wage": "1 point if the average wage is below 80% of the minimum wage.",
     "Pts: no 2024 accounts": "1 point if 2024 annual accounts were not filed.",
     "Pts: no VAT": "1 point if not VAT-registered since 2024.",
@@ -137,10 +141,12 @@ select
     company_code as "Company code",
     replace(category, '_', ' ') as "Category",
     reviews as "Google reviews",
+    top_place_reviews as "Busiest place reviews",
     case when is_busy then 'yes' else 'no' end as "Busy",
     round(open_hours_all) as "Open h/week",
     staff_declared as "Insured staff",
-    round(staff_declared * 40) as "Hours staff can cover",
+    round(staff_declared * 48 + case when is_owner_run then 60 else 0 end)
+        as "Hours staff can cover",
     staffing_coverage as "Coverage",
     round(wage_to_minimum * 100) as "Wage % of minimum",
     revenue_2024 as "Revenue 2024 €",
@@ -235,7 +241,7 @@ with leads_tab:
                           places as "Google places found",
                           places_linked as "Places linked to a company",
                           companies_linked as "Companies behind them",
-                          companies_assessed as "Scored (UAB/AB)",
+                          companies_assessed as "Scored",
                           companies_busy as "Busy",
                           leads as "Leads",
                           round(100 * lead_share_of_assessed, 1) as "% of scored flagged"
@@ -253,12 +259,13 @@ with leads_tab:
                 "Places linked to a company": st.column_config.NumberColumn(
                     help="Places linked to a company with high confidence."
                 ),
-                "Scored (UAB/AB)": st.column_config.NumberColumn(
-                    help="Companies expected to have employees. Owner-run partnerships (MB), "
-                    "sole traders (IĮ) and non-profits are not scored."
+                "Scored": st.column_config.NumberColumn(
+                    help="Linked companies except non-profits, whose volunteers need not be "
+                    "insured staff."
                 ),
                 "Busy": st.column_config.NumberColumn(
-                    help="Scored companies with at least the category's median number of reviews."
+                    help="Scored companies whose busiest place has at least the median reviews "
+                    "of all Google places in the category."
                 ),
             },
         )
@@ -266,13 +273,16 @@ with leads_tab:
         with st.expander("How does a company become a lead?"):
             st.markdown(
                 """
-1. **Scored**: its Google places are linked to it with high confidence, and it is a UAB or AB.
-2. **Busy**: at least as many Google reviews as the typical (median) scored company of its category.
+1. **Scored**: its Google places are linked to it with high confidence, and it isn't a
+   non-profit. For owner-run companies (MB, IĮ), 60 hours a week are allowed for working owners.
+2. **Busy**: its busiest place has at least the median reviews of all Google places of its
+   category.
 3. **Points** for what its official records show (the *Pts:* columns, summed in *Points*).
 4. **Tier**:
    - *Review* = busy and 2+ points;
-   - *Priority* = busy, a staffing gap, 3+ points, and a company link that doesn't rest on the
-     name alone when another company of the same trade is registered at the address.
+   - *Priority* = busy, a staffing gap, 3+ points, not owner-run, and a company link that
+     doesn't rest on the name alone when another company of the same trade is registered at
+     the address.
 
 *Rank* orders every scored company: priority, then review, then the rest by points.
 *Why this tier* says which rule applied. Hover over a column name to see what it means.

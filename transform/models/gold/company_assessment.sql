@@ -2,8 +2,10 @@
 
 -- One row per company and category it runs Google-visible places in: what Google shows, what
 -- the company declares, the signals that compare the two, and the resulting lead tier.
--- Only high-confidence links to operating places count. Owner-run and non-profit forms are
--- listed but not scored: their owners or volunteers need not be insured employees.
+-- Only high-confidence links to operating places count. Owner-run forms (MB, IĮ) are scored with
+-- 60 hours a week allowed for working owners, and can't be priority. Non-profits are listed but
+-- not scored: volunteers need not be insured employees.
+
 -- the month of this assessment: the newest of the Google and Sodra runs it uses (a monthly
 -- refresh may reuse last month's Google data)
 with google_run as (
@@ -33,6 +35,15 @@ linked_places as (
     where m.confidence = 'high' and p.is_operational
 ),
 
+-- "busy" is measured against every Google place of the category, linked or not
+market as (
+    select pc.category, median(p.review_count) as busy_threshold
+    from {{ ref('places') }} as p
+    inner join {{ ref('place_categories') }} as pc on p.place_id = pc.place_id
+    where p.is_in_vilnius and p.is_operational
+    group by pc.category
+),
+
 -- all of a company's places, whatever the category: its staff serve all of them. A "24/7"
 -- listing usually means a phone or online service, so its hours are left out of the check.
 company_places as (
@@ -54,6 +65,7 @@ category_places as (
         pc.category,
         count(*) as places,
         sum(l.review_count) as reviews,
+        max(l.review_count) as top_place_reviews,
         list(l.place_id order by l.review_count desc) as place_ids
     from linked_places as l
     inner join {{ ref('place_categories') }} as pc on l.place_id = pc.place_id
@@ -134,12 +146,17 @@ facts as (
         c.legal_form,
         c.registered_on,
         case
-            when c.is_owner_run_form then 'owner-run legal form: owners need not be insured employees'
-            when c.legal_form not in ('Uždaroji akcinė bendrovė', 'Akcinė bendrovė')
+            when
+                not c.is_owner_run_form
+                and c.legal_form not in ('Uždaroji akcinė bendrovė', 'Akcinė bendrovė')
                 then 'non-profit or other legal form: may rely on volunteers or members'
         end as exclusion_reason,
+        c.is_owner_run_form as is_owner_run,
+        -- owners of an MB or IĮ may work without being insured: allow one owner's long week
+        case when c.is_owner_run_form then 60 else 0 end as owner_hours,
         cp.places,
         cp.reviews,
+        cp.top_place_reviews,
         cp.place_ids,
         a.places_all,
         a.reviews_all,
@@ -190,45 +207,52 @@ ratios as (
         end as staff_text,
         -- rough yearly wage bill: declared average wage × staff over the last 12 months
         average_wage * staff_avg_12m * 12 as wage_bill_estimate,
-        -- weekly hours the declared staff can legally work (40 h each) against the hours the
-        -- company's places are open with at least one person on duty
-        round(staff_declared * 40 / nullif(open_hours_all, 0), 2) as staffing_coverage,
+        -- weekly hours the declared staff can legally work (48 h each, the Labour Code maximum
+        -- with overtime, plus the owners' allowance) against the hours the company's places are
+        -- open with at least one person on duty
+        round((staff_declared * 48 + owner_hours) / nullif(open_hours_all, 0), 2)
+            as staffing_coverage,
         round(reviews_all / greatest(staff_declared, 1), 1) as reviews_per_staff,
         round(revenue_2024 / nullif(reviews_all, 0), 1) as revenue_per_review
     from facts
 ),
 
--- peers: assessed companies of the same category
+-- peers for the per-worker ratios: UAB/AB of the same category, whose staff counts are complete
 peers as (
     select
         category,
-        median(reviews) as busy_threshold,
         quantile_cont(reviews_per_staff, 0.9) as reviews_per_staff_p90,
         quantile_cont(revenue_per_review, 0.1) as revenue_per_review_p10
     from ratios
-    where exclusion_reason is null
+    where exclusion_reason is null and not is_owner_run
     group by category
 ),
 
 signals as (
     select
         r.*,
-        p.busy_threshold,
+        k.busy_threshold,
         p.reviews_per_staff_p90,
         p.revenue_per_review_p10,
-        r.reviews >= p.busy_threshold as is_busy,
-        coalesce(r.staffing_coverage < 1, false) as staff_gap,
+        r.top_place_reviews >= k.busy_threshold as is_busy,
+        -- a gap counts when at least a fifth of the opening hours have nobody declared to work
+        coalesce(r.staffing_coverage < 0.8, false) as staff_gap,
         coalesce(r.staffing_coverage < 0.5, false) as staff_gap_severe,
+        -- not for owner-run companies: their workforce (the owners) isn't counted anywhere
         coalesce(
-            r.reviews_per_staff >= p.reviews_per_staff_p90
-            or r.revenue_per_review <= p.revenue_per_review_p10,
+            not r.is_owner_run
+            and (
+                r.reviews_per_staff >= p.reviews_per_staff_p90
+                or r.revenue_per_review <= p.revenue_per_review_p10
+            ),
             false
         ) as activity_outruns_size,
         coalesce(r.wage_to_minimum < 0.8, false) as low_declared_wage,
         r.missing_accounts_2024 and r.registered_on < date '2024-01-01' as accounts_missing,
         not r.vat_registered_since_2024 as not_vat_registered
     from ratios as r
-    inner join peers as p on r.category = p.category
+    inner join market as k on r.category = k.category
+    left join peers as p on r.category = p.category
 ),
 
 scored as (
@@ -249,13 +273,13 @@ select
     company_code,
     company_name,
     legal_form,
-    -- priority needs a staffing gap plus support, and a company link that doesn't rest on the
-    -- name alone while another same-trade company is registered at the place
+    -- priority needs a staffing gap plus support, a company that isn't owner-run, and a company
+    -- link that doesn't rest on the name alone while another same-trade company is at the place
     case
         when exclusion_reason is not null then 'not assessed'
         when not is_busy then 'none'
         when
-            staff_gap and score >= 3
+            staff_gap and score >= 3 and not is_owner_run
             and (identity_checked or same_trade_neighbours is null)
             then 'priority'
         when score >= 2 then 'review'
@@ -266,11 +290,17 @@ select
     case
         when exclusion_reason is not null then 'Not scored: ' || exclusion_reason
         when not is_busy then format(
-            'Not a lead: not busy ({} reviews; busy from {})',
-            reviews, cast(ceil(busy_threshold) as bigint)
+            'Not a lead: not busy (its busiest place has {} reviews; busy from {})',
+            top_place_reviews, cast(ceil(busy_threshold) as bigint)
         )
-        when staff_gap and score >= 3 and (identity_checked or same_trade_neighbours is null)
+        when staff_gap and score >= 3 and not is_owner_run
+            and (identity_checked or same_trade_neighbours is null)
             then format('Priority: staff cannot cover the opening hours, and {} points', score)
+        when staff_gap and score >= 3 and is_owner_run then format(
+            'Review, not priority: {} points with a staffing gap, but the company is owner-run '
+            || 'and the number of working owners is not public',
+            score
+        )
         when staff_gap and score >= 3 then format(
             'Review, not priority: {} points with a staffing gap, but the company was found by '
             || 'name and another company of the same trade is registered at the address',
@@ -282,13 +312,18 @@ select
     exclusion_reason,
     is_busy,
     list_filter([
-        case when staff_gap and staff_declared = 0 then format(
+        case when staff_gap and is_owner_run then format(
+            '{} insured staff ({} h) plus 60 h for working owners, but the places are open {} h '
+            || 'a week (coverage {})',
+            staff_text, cast(round(staff_declared * 48) as bigint),
+            cast(round(open_hours_all) as bigint), staffing_coverage
+        ) when staff_gap and staff_declared = 0 then format(
             'no insured staff, but the places are open {} h a week',
             cast(round(open_hours_all) as bigint)
         ) when staff_gap then format(
-            '{} insured staff can work at most {} h a week, but the places are open {} h a week '
-            || '(coverage {})',
-            staff_text, cast(round(staff_declared * 40) as bigint),
+            '{} insured staff can legally work at most {} h a week (48 h each with overtime), but '
+            || 'the places are open {} h a week (coverage {})',
+            staff_text, cast(round(staff_declared * 48) as bigint),
             cast(round(open_hours_all) as bigint), staffing_coverage
         ) end,
         case when activity_outruns_size then format(
@@ -315,6 +350,10 @@ select
         end
     ], lambda x: x is not null) as reasons,
     list_filter([
+        case when is_owner_run then
+            'owner-run (MB/IĮ): owners may work without being insured; 60 h a week are allowed '
+            || 'for them, but how many owners work there is not public'
+        end,
         case when not identity_checked
             then 'company found by its name: confirm it runs the place before acting' end,
         case when same_trade_neighbours is not null then format(
@@ -330,7 +369,7 @@ select
         case when places_with_hours < places_all then 'some places have no opening hours on Google' end,
         case when registered_on > (select month from sodra) - interval 12 month
             then 'company registered less than a year ago' end,
-        case when overdue_tax_arrears > 0
+        case when overdue_tax_arrears >= 1
             then format('overdue tax debt €{}', cast(round(overdue_tax_arrears) as bigint)) end,
         case when vat_deregistered_on >= date '2024-01-01'
             then format('VAT registration ended on {}', vat_deregistered_on) end,
@@ -339,8 +378,10 @@ select
             cast(round(job_ad_wage) as bigint), cast(round(average_wage) as bigint)
         ) end
     ], lambda x: x is not null) as context,
+    is_owner_run,
     places,
     reviews,
+    top_place_reviews,
     busy_threshold,
     places_all,
     reviews_all,

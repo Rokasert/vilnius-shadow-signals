@@ -8,7 +8,9 @@ where
     + low_declared_wage::int + accounts_missing::int + not_vat_registered::int
     or (tier = 'not assessed') <> (exclusion_reason is not null)
     or (tier in ('priority', 'review') and (not is_busy or score < 2))
-    or (tier = 'priority' and (not staff_gap or score < 3))
+    or (tier = 'priority' and (not staff_gap or score < 3 or is_owner_run))
+    or (is_owner_run and activity_outruns_size)
+    or is_busy <> (top_place_reviews >= busy_threshold)
     or (tier = 'none' and is_busy and score >= 2 and exclusion_reason is null)
     or tier_reason not like case tier
         when 'priority' then 'Priority:%'
